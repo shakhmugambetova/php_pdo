@@ -12,7 +12,19 @@
         <th>name</th>
         <th>age</th>
         <th>salary</th>
+        <th>delete</th>
     </tr>
+    <?php 
+    $pdo  = new PDO('mysql:host=localhost;dbname=worlers;charset=utf8', 'mysql', 'user');
+    $pdo ->setAttribute(PDO:: ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if(isset($_GET['del'])){ 
+    $del = $_GET['del'];
+    $query = "DELETE from workers WHERE id = $del";
+    $result2=$pdo->query($query);
+      }
+
+
+    ?>
    
         <?php
         try{
@@ -23,11 +35,12 @@
              foreach($result as $row){
                  $data .='<tr>';
                  $data .='<td>'.$row['id'].'</td>';
-                $data .='<td>'.$row['name'].'</td>';
+                 $data .='<td>'.$row['name'].'</td>';
 
                  $data .='<td>'.$row['age'].'</td>';
 
                  $data .='<td>'.$row['salary'].'</td>';
+                 $data .='<td><a href = "?del='.$row['id'].'">удалить</a></td>';
                  $data .='</tr>';
             }
             echo $data;    
